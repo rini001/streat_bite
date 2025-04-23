@@ -1,0 +1,73 @@
+Create a street food vendor discovery app frontend using React with TypeScript and styled-components. This is a MERN stack project, but we're focusing only on the frontend for now with mock data instead of actual backend integration. Build all UI components from scratch.
+
+### Tech Stack Requirements:
+- React with TypeScript only (no JavaScript files)
+- styled-components for styling
+- React Router for navigation
+- No UI design libraries (no Material UI, Chakra UI, Ant Design, etc.)
+
+### Core Features:
+1. Landing page with paths for both users and vendors
+2. Vendor registration and profile management flow
+3. User browsing experience with map and list views (use browser's Geolocation API)
+4. "Save favorite vendors" functionality (for logged-in users)
+
+### Component Development:
+Build all UI components from scratch, including:
+- Custom button components with different variants
+- Form inputs, selects, and validation components
+- Cards for vendor displays
+- Navigation elements and header/footer
+- Modal dialogs
+- Custom dropdowns and filters
+- Simple tabs and navigation elements
+
+### Mock Data Requirements:
+Create the following mock data files:
+1. `mockVendors.ts`: Array of at least 10 vendor objects with fields:
+   - id, name, businessName, description, cuisineType
+   - contactInfo (phone, email)
+   - locations (array of location objects with coordinates, address, schedules)
+   - menu (array of food items with name, price, description)
+   - images (array of image URLs)
+   - paymentMethods, ratings, reviews
+
+2. `mockUsers.ts`: Array of 5 user objects with:
+   - id, name, email
+   - savedVendors (array of vendor IDs)
+
+### Page Structure:
+1. **Landing Page**:
+   - Hero section with app value proposition
+   - Two clear paths: "Find Food" and "Register as Vendor"
+   - Map preview with sample vendors
+   - How it works section
+   - Featured vendors carousel (custom implementation)
+
+2. **User Pages**:
+   - Vendor discovery page with map and list views
+   - Search and filter functionality
+   - Vendor detail page
+   - User login/signup modal
+   - User profile page with saved vendors
+
+3. **Vendor Pages**:
+   - Registration form
+   - Login page
+   - Dashboard to manage profile, menu, and locations
+   - Analytics preview (placeholder for v1)
+
+### TypeScript Requirements:
+- Strict TypeScript usage throughout the project
+- Create proper interfaces/types for all data structures
+- Type all component props, state, and functions
+- Use proper TypeScript configurations
+
+### Setup Instructions:
+Include detailed instructions on:
+- Installing dependencies
+- Running the development server
+- Building for production
+- File structure explanation
+
+Focus on building a clean, well-organized codebase with custom components that have a consistent design language without relying on any external UI libraries.
