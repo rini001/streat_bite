@@ -6,6 +6,7 @@ import { Button, Container, Flex, colors, fonts } from "@/components/styled";
 import Modal from "@/components/common/Modal";
 import { LoginCredentials, UserData } from "@/types/auth.types";
 import { useAuth } from "@/hooks/useAuth";
+import SignUpModal from "../common/SignUpModal";
 
 const HeaderContainer = styled.header`
   background-color: ${colors.white};
@@ -178,12 +179,12 @@ const Header: React.FC = () => {
             <NavLink href="/about" active={location === "/about"}>
               About
             </NavLink>
-            <NavLink
+            {/* <NavLink
               href="/vendor-register"
               active={location === "/vendor-register"}
             >
               For Vendors
-            </NavLink>
+            </NavLink> */}
 
             {/* {isAuthenticated ? (
               <>
@@ -204,9 +205,15 @@ const Header: React.FC = () => {
               </Button>
               <Button
                 variant="primary"
-                onClick={() => setIsSignUpModalOpen(true)}
+                // onClick={() => setIsSignUpAsUserModalOpen(true)}
               >
                 Sign Up
+              </Button>
+              <Button
+                variant="secondary"
+                onClick={() => setIsSignUpModalOpen(true)}
+              >
+                For Vendors
               </Button>
             </>
             {/* )} */}
@@ -233,13 +240,13 @@ const Header: React.FC = () => {
         >
           About
         </MobileNavLink>
-        <MobileNavLink
+        {/* <MobileNavLink
           href="/vendor-register"
           active={location === "/vendor-register"}
           onClick={closeMenu}
         >
           For Vendors
-        </MobileNavLink>
+        </MobileNavLink> */}
 
         {/* {isAuthenticated ? (
           <>
@@ -280,12 +287,22 @@ const Header: React.FC = () => {
           <Button
             variant="primary"
             onClick={() => {
+              // setIsSignUpModalOpen(true);
+              closeMenu();
+            }}
+            style={{ width: "100%", marginBottom: "0.5rem" }}
+          >
+            Sign Up
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={() => {
               setIsSignUpModalOpen(true);
               closeMenu();
             }}
             style={{ width: "100%" }}
           >
-            Sign Up
+            For Vendors
           </Button>
         </>
         {/* )} */}
@@ -403,121 +420,11 @@ const Header: React.FC = () => {
       </Modal>
 
       {/* Sign Up Modal */}
-      <Modal
+      <SignUpModal
         isOpen={isSignUpModalOpen}
         onClose={() => setIsSignUpModalOpen(false)}
-        title="Sign Up"
-        subTitle="Create your account to save favorite vendors"
-      >
-        <form onSubmit={handleSubmit}>
-          <div style={{ marginBottom: "1rem" }}>
-            <label
-              style={{
-                display: "block",
-                marginBottom: "0.5rem",
-                fontWeight: 500,
-              }}
-            >
-              Full Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="Your full name"
-              style={{
-                width: "100%",
-                padding: "0.75rem",
-                borderRadius: "0.5rem",
-                border: `1px solid ${colors.neutral[300]}`,
-                outline: "none",
-              }}
-              required
-            />
-          </div>
-
-          <div style={{ marginBottom: "1rem" }}>
-            <label
-              style={{
-                display: "block",
-                marginBottom: "0.5rem",
-                fontWeight: 500,
-              }}
-            >
-              Email Address
-            </label>
-            <input
-              type="email"
-              placeholder="your@email.com"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              style={{
-                width: "100%",
-                padding: "0.75rem",
-                borderRadius: "0.5rem",
-                border: `1px solid ${colors.neutral[300]}`,
-                outline: "none",
-              }}
-              required
-            />
-          </div>
-
-          <div style={{ marginBottom: "1.5rem" }}>
-            <label
-              style={{
-                display: "block",
-                marginBottom: "0.5rem",
-                fontWeight: 500,
-              }}
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              placeholder="Create a password (min. 8 characters)"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              style={{
-                width: "100%",
-                padding: "0.75rem",
-                borderRadius: "0.5rem",
-                border: `1px solid ${colors.neutral[300]}`,
-                outline: "none",
-              }}
-              required
-            />
-          </div>
-
-          <Button
-            type="submit"
-            variant="primary"
-            style={{ width: "100%", marginBottom: "1rem" }}
-          >
-            Create Account
-          </Button>
-
-          <p style={{ textAlign: "center" }}>
-            Already have an account?{" "}
-            <a
-              href="#"
-              style={{ color: colors.primary, textDecoration: "none" }}
-              onClick={(e) => {
-                e.preventDefault();
-                setIsSignUpModalOpen(false);
-                setIsSignInModalOpen(true);
-              }}
-            >
-              Sign in
-            </a>
-          </p>
-        </form>
-      </Modal>
+        onSubmit={handleSubmit}
+      />
     </HeaderContainer>
   );
 };
