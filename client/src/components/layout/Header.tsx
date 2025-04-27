@@ -1,12 +1,13 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
-import { Link, useLocation } from "wouter";
+// import { Link, useLocation } from "wouter";
 import styled from "styled-components";
 import { Button, Container, Flex, colors, fonts } from "@/components/styled";
-
+import { Link, useLocation } from 'react-router-dom';
 import Modal from "@/components/common/Modal";
 import { LoginCredentials, UserData } from "@/types/auth.types";
 import { useAuth } from "@/hooks/useAuth";
 import SignUpModal from "../common/SignUpModal";
+import { useNavigate } from "react-router-dom";
 
 const HeaderContainer = styled.header`
   background-color: ${colors.white};
@@ -93,7 +94,9 @@ const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
-  const [location] = useLocation();
+  // const [location] = useLocation();
+  const location = useLocation();
+  const navigate = useNavigate();
   // const { isAuthenticated, logout } = useAuth();
   const [formData, setFormData] = useState<UserData>({
     name: "",
@@ -170,13 +173,14 @@ const Header: React.FC = () => {
     <HeaderContainer>
       <Container>
         <Flex justify="space-between" align="center">
-          <Logo href="/">StreetBite</Logo>
+          <Logo to="/">StreetBite</Logo>
 
           <NavLinks>
-            <NavLink href="/discover" active={location === "/discover"}>
+            <NavLink to= "/discover" >
               Discover
             </NavLink>
-            <NavLink href="/about" active={location === "/about"}>
+         
+            <NavLink to="/about">
               About
             </NavLink>
             {/* <NavLink
@@ -227,15 +231,13 @@ const Header: React.FC = () => {
 
       <MobileMenu isOpen={isMenuOpen}>
         <MobileNavLink
-          href="/discover"
-          active={location === "/discover"}
+          to = "/discover"
           onClick={closeMenu}
         >
           Discover
         </MobileNavLink>
         <MobileNavLink
-          href="/about"
-          active={location === "/about"}
+          to= "/about"
           onClick={closeMenu}
         >
           About

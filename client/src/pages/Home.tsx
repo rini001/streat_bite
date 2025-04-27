@@ -14,6 +14,7 @@ import mockVendors from "@/mock/mockVendors";
 import { useAuth } from "@/context/AuthContext";
 import useGeolocation from "@/hooks/useGeolocation";
 import SignUpModal from "@/components/common/SignUpModal";
+import { useNavigate } from "react-router-dom";
 
 // Styled components for this page
 const HeroSection = styled(Section)`
@@ -81,7 +82,7 @@ const Home: React.FC = () => {
   const featuredVendors = mockVendors
     .filter((vendor) => vendor.ratings.average >= 4.6)
     .slice(0, 4);
-
+    const navigate = useNavigate();
   return (
     <>
       {/* Hero Section */}
@@ -105,7 +106,7 @@ const Home: React.FC = () => {
                 <Button
                   variant="primary"
                   className="bg-white text-primary py-3 px-8 text-lg font-bold shadow-lg hover:bg-neutral-100"
-                  onClick={() => setLocation("/discover")}
+                  onClick={() => navigate("/discover")}
                 >
                   Find Food
                 </Button>
@@ -327,14 +328,14 @@ const Home: React.FC = () => {
             <Button
               variant="primary"
               className="py-3 px-8 text-lg font-bold shadow-lg"
-              onClick={() => setLocation("/discover")}
+              onClick={() => navigate("/discover")}
             >
               Get Started Now
             </Button>
             <Button
               variant="outline"
               className="py-3 px-8 text-lg font-bold shadow-lg"
-              onClick={() => setLocation("/about")}
+              onClick={() => navigate("/about")}
             >
               Learn More
             </Button>
