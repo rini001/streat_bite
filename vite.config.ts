@@ -25,7 +25,10 @@ export default defineConfig({
   },
   root: path.resolve(import.meta.dirname, "client"),
   build: {
-    outDir: path.resolve(import.meta.dirname, "dist/public"),
+    // Ensure the build output is in the correct folder that Vercel expects
+    outDir: path.resolve(import.meta.dirname, "dist"),
     emptyOutDir: true,
   },
+  // Optionally add base path if deploying to a subdirectory
+  base: process.env.NODE_ENV === "production" ? "/your-app/" : "/",
 });
