@@ -1,6 +1,7 @@
 import { useState, useEffect, createContext, useContext, ReactNode } from 'react';
 import { usersService } from '../api/services/usersService';
 import { User, UserData, LoginCredentials, AuthResponse } from '../types/auth.types';
+import { useNavigate } from 'react-router-dom';
 
 interface AuthContextType {
   user: User | null;
@@ -63,10 +64,11 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
       throw err;
     }
   };
-
+const navigate = useNavigate(); 
   const logout = (): void => {
     usersService.logout();
     setUser(null);
+    navigate('/')
   };
 
   const value: AuthContextType = {

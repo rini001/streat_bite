@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "wouter";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Vendor } from "@/types";
 import { colors, fonts } from "@/components/styled";
@@ -184,7 +184,7 @@ const VendorCard: React.FC<VendorCardProps> = ({ vendor, distance, onToggleFavor
         
         <VendorDescription>{vendor.description}</VendorDescription>
         
-        <ViewButton href={`/vendor/${vendor.id}`}>
+        <ViewButton to={`/vendor/${vendor.id}`}>
           View Details
         </ViewButton>
       </ContentContainer>

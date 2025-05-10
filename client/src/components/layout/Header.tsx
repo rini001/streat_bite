@@ -94,6 +94,7 @@ const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
+  const [dashboardId, setDashboardId] = useState<string | null>(null);
   // const [location] = useLocation();
   const location = useLocation();
   const navigate = useNavigate();
@@ -109,7 +110,7 @@ const Header: React.FC = () => {
     password: "",
   });
 
-  const { login, register } = useAuth();
+  const {isAuthenticated, login, register,logout } = useAuth();
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -153,7 +154,10 @@ const Header: React.FC = () => {
     // setError(null);
 
     try {
-      await login(credentials);
+     const response= await login(credentials);
+     setDashboardId(response.user._id);
+      navigate(`/dashboard/${response.user._id}`)
+    setIsSignInModalOpen(false);
       // Redirect or handle successful login
     } catch (err: any) {
       // setError(err.response?.data?.message || 'Login failed');
@@ -173,8 +177,8 @@ const Header: React.FC = () => {
     <HeaderContainer>
       <Container>
         <Flex justify="space-between" align="center">
-          <Logo to="/">StreetBite</Logo>
-
+          
+          {isAuthenticated? <Logo to={`/dashboard/${dashboardId}`}>StreetBite</Logo>:<Logo to="/">StreetBite</Logo>}
           <NavLinks>
             <NavLink to= "/discover" >
               Discover
@@ -190,16 +194,16 @@ const Header: React.FC = () => {
               For Vendors
             </NavLink> */}
 
-            {/* {isAuthenticated ? (
+            {isAuthenticated ? (
               <>
-                <NavLink href="/profile" active={location === "/profile"}>
+                {/* <NavLink to="/profile">
                   My Profile
-                </NavLink>
+                </NavLink> */}
                 <Button variant="outline" onClick={logout}>
                   Log Out
                 </Button>
               </>
-            ) : ( */}
+            ) : (
             <>
               <Button
                 variant="outline"
@@ -220,7 +224,7 @@ const Header: React.FC = () => {
                 For Vendors
               </Button>
             </>
-            {/* )} */}
+            )} 
           </NavLinks>
 
           <MobileMenuButton onClick={toggleMenu}>
