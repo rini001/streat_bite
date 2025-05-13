@@ -429,7 +429,7 @@ const Header: React.FC = () => {
       <SignUpModal
         isOpen={isSignUpModalOpen}
         onClose={() => setIsSignUpModalOpen(false)}
-        onSubmit={handleSubmit}
+        // onSubmit={handleSubmit}
       />
     </HeaderContainer>
   );

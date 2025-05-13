@@ -2,14 +2,15 @@ import React, { ChangeEvent, FormEvent, useState } from "react";
 import Modal from "@/components/common/Modal";
 import { Button, colors } from "@/components/styled";
 import { UserData } from "@/types/auth.types";
+import { useAuth } from "@/hooks/useAuth";
 
 type SignUpModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (e: FormEvent<HTMLFormElement>) => Promise<void>;
+  // onSubmit: (e: FormEvent<HTMLFormElement>) => Promise<void>;
 };
 
-const SignUpModal: React.FC<SignUpModalProps> = ({ isOpen, onClose, onSubmit }) => {
+const SignUpModal: React.FC<SignUpModalProps> = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState<UserData>({
     name: "",
     email: "",
@@ -25,17 +26,27 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ isOpen, onClose, onSubmit }) 
     }));
   };
 
-//   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-//     e.preventDefault();
-//     await onSubmit(formData);
-//     setFormData({
-//       name: "",
-//       email: "",
-//       password: "",
-//       role: "user",
-//     });
-//   };
+  const {isAuthenticated, login, register,logout } = useAuth();
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
+    // setLoading(true);
+    // setError(null);
 
+    try {
+      await register(formData);
+      // setSuccess(true);
+      setFormData({
+        name: "",
+        email: "",
+        password: "",
+        role: "user",
+      });
+    } catch (err: any) {
+      // setError(err.response?.data?.message || 'Registration failed');
+    } finally {
+      // setLoading(false);
+    }
+  };
   return (
     <Modal
       isOpen={isOpen}
@@ -43,7 +54,7 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ isOpen, onClose, onSubmit }) 
       title="Sign Up"
       subTitle="Create your account to save favorite vendors"
     >
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit}>
         {/* Full Name */}
         <div style={{ marginBottom: "1rem" }}>
           <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: 500 }}>
