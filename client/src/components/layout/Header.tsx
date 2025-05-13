@@ -126,24 +126,12 @@ const Header: React.FC = () => {
     }));
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
-    e.preventDefault();
-    // setLoading(true);
-    // setError(null);
-
+    const handleSubmit = async (formData: UserData): Promise<void> => {
     try {
       await register(formData);
-      // setSuccess(true);
-      setFormData({
-        name: "",
-        email: "",
-        password: "",
-        role: "user",
-      });
+      setIsSignUpModalOpen(false); // close modal on success
     } catch (err: any) {
-      // setError(err.response?.data?.message || 'Registration failed');
-    } finally {
-      // setLoading(false);
+      console.error("Registration failed:", err.response?.data?.message || err.message);
     }
   };
   const handleSubmitSignIn = async (
@@ -429,7 +417,7 @@ const Header: React.FC = () => {
       <SignUpModal
         isOpen={isSignUpModalOpen}
         onClose={() => setIsSignUpModalOpen(false)}
-        // onSubmit={handleSubmit}
+        onSubmit={handleSubmit}
       />
     </HeaderContainer>
   );

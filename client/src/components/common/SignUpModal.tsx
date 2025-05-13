@@ -2,15 +2,14 @@ import React, { ChangeEvent, FormEvent, useState } from "react";
 import Modal from "@/components/common/Modal";
 import { Button, colors } from "@/components/styled";
 import { UserData } from "@/types/auth.types";
-import { useAuth } from "@/hooks/useAuth";
 
 type SignUpModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  // onSubmit: (e: FormEvent<HTMLFormElement>) => Promise<void>;
+  onSubmit: (formData: UserData) => Promise<void>;
 };
 
-const SignUpModal: React.FC<SignUpModalProps> = ({ isOpen, onClose }) => {
+const SignUpModal: React.FC<SignUpModalProps> = ({ isOpen, onClose, onSubmit }) => {
   const [formData, setFormData] = useState<UserData>({
     name: "",
     email: "",
@@ -26,27 +25,17 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ isOpen, onClose }) => {
     }));
   };
 
-  const {isAuthenticated, login, register,logout } = useAuth();
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // setLoading(true);
-    // setError(null);
-console.log(formData)
-    try {
-      await register(formData);
-      // setSuccess(true);
-      setFormData({
-        name: "",
-        email: "",
-        password: "",
-        role: "user",
-      });
-    } catch (err: any) {
-      // setError(err.response?.data?.message || 'Registration failed');
-    } finally {
-      // setLoading(false);
-    }
+    await onSubmit(formData);
+    setFormData({
+      name: "",
+      email: "",
+      password: "",
+      role: "user",
+    });
   };
+
   return (
     <Modal
       isOpen={isOpen}
