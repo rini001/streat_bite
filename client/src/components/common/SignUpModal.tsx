@@ -32,7 +32,7 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ isOpen, onClose, onSubmit }) 
       name: "",
       email: "",
       password: "",
-      role: "user",
+      role: "vendor",
     });
   };
 
