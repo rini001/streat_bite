@@ -328,7 +328,7 @@ const VendorRegistration: React.FC = () => {
                     required
                   />
 
-                  <FormSelect
+                  {/* <FormSelect
                     label="Cuisine Type *"
                     options={cuisineOptions}
                     value={formData.cuisineType}
@@ -337,7 +337,7 @@ const VendorRegistration: React.FC = () => {
                     }
                     error={errors.cuisineType}
                     required
-                  />
+                  /> */}
 
                   {/* <FormInput 
                     label="Owner Name *"
@@ -463,13 +463,13 @@ const VendorRegistration: React.FC = () => {
             {/* Menu Step (Placeholder) */}
             {currentStep === "menu" && (
               <FormSection>
-                <FormSectionTitle>Menu Information</FormSectionTitle>
+                {/* <FormSectionTitle>Menu Information</FormSectionTitle>
                 <p className="text-neutral-600 mb-4">
                   Add your menu items with prices and descriptions.
-                </p>
+                </p> */}
 
                 {/* Menu item would be dynamically added in a real implementation */}
-                <div className="border border-neutral-300 rounded-lg p-4 mb-4">
+                {/* <div className="border border-neutral-300 rounded-lg p-4 mb-4">
                   <Heading level={4} className="text-lg mb-3">
                     Item #1
                   </Heading>
@@ -512,7 +512,7 @@ const VendorRegistration: React.FC = () => {
                       value=""
                       onChange={() => {}}
                       placeholder="Select a category"
-                    />
+                    /> */}
 
                     <div>
                       <label className="block text-neutral-700 font-medium mb-2">
@@ -526,21 +526,21 @@ const VendorRegistration: React.FC = () => {
                         <i className="fas fa-upload mr-2"></i> Upload Image
                       </Button>
                     </div>
-                  </div>
-                </div>
+                  {/* </div> */}
+                {/* </div> */}
 
-                <Button type="button" variant="outline" className="mb-8">
+                {/* <Button type="button" variant="outline" className="mb-8">
                   <i className="fas fa-plus mr-2"></i> Add Another Item
-                </Button>
+                </Button> */}
               </FormSection>
             )}
 
             {/* Location Step (Placeholder) */}
             {currentStep === "location" && (
               <FormSection>
-                <FormSectionTitle>Location & Schedule</FormSectionTitle>
+                <FormSectionTitle>Location </FormSectionTitle>
                 <p className="text-neutral-600 mb-4">
-                  Add your primary location and operating hours.
+                  Add your primary location 
                 </p>
 
                 <div className="mb-6">
@@ -580,7 +580,7 @@ const VendorRegistration: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="mb-8">
+                {/* <div className="mb-8">
                   <Heading level={4} className="text-lg mb-3">
                     Operating Hours
                   </Heading>
@@ -620,7 +620,7 @@ const VendorRegistration: React.FC = () => {
                       </div>
                     </div>
                   ))}
-                </div>
+                </div> */}
               </FormSection>
             )}
 
