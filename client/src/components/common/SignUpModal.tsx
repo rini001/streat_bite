@@ -31,7 +31,7 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ isOpen, onClose }) => {
     e.preventDefault();
     // setLoading(true);
     // setError(null);
-
+console.log(formData)
     try {
       await register(formData);
       // setSuccess(true);
