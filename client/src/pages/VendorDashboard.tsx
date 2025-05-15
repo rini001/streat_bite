@@ -1,6 +1,8 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { cartService } from '@/api/services/cartService';
+import { RestaurantCard } from '@/components/common/Card';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -42,11 +44,47 @@ const VendorDashboard: FC = () => {
     const handleAddCartClick = () => {
       navigate('/vendor-register'); // 👉 navigate to the route
     };
-  
+   const [carts, setCarts] = useState([]);
+  const [error, setError] = useState<string | null>(null);
+const { id } = useParams();
+  useEffect(() => {
+    const fetchCarts = async () => {
+      try {
+        const data = await cartService.getCartsById(id as string);
+        setCarts(data);
+      } catch (err: any) {
+        console.error('Error fetching carts:', err);
+        setError(err.message || 'Something went wrong');
+      }
+    };
+
+    fetchCarts();
+  }, [id]);
+console.log(carts.data);
+
   return (
     <Container>
       <Title>Vendor Dashboard</Title>
       <AddCartButton onClick={handleAddCartClick}>Add Cart</AddCartButton>
+      {
+        carts.data && carts.data.map((cart)=>(
+            <div key={cart._id} style={{ padding: 20 }}>
+              <RestaurantCard
+                name={cart.businessName}
+                description={cart.description}
+                menuImage={cart.menuImage}
+              />
+            </div>
+          )
+        )
+      }
+       {/* <div style={{ padding: 20 }}>
+      <RestaurantCard
+        name="Biryani Blues"
+        description="Delicious Hyderabadi Biryani and Kebabs. Quick Delivery!"
+        menuImage="https://via.placeholder.com/400x600.png?text=Menu+Image"
+      />
+    </div> */}
     </Container>
   );
 };

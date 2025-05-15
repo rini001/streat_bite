@@ -14,7 +14,7 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ isOpen, onClose, onSubmit }) 
     name: "",
     email: "",
     password: "",
-    role: "user",
+    role: "vendor",
   });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

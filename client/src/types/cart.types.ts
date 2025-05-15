@@ -5,4 +5,5 @@ export interface CartData {
   state: string;
   zipCode: string;
   description: string;
+  menuImage:File | null
 }

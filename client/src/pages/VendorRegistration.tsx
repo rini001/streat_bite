@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useLocation } from "wouter";
 import styled from "styled-components";
 import {
@@ -14,6 +14,8 @@ import FormInput from "@/components/forms/FormInput";
 import FormSelect from "@/components/forms/FormSelect";
 import { CuisineType, RegistrationFormData } from "@/types";
 import { useNavigate } from "react-router-dom";
+import { CartData } from "@/types/cart.types";
+import { previousDay } from "date-fns";
 
 // Styled components for this page
 const RegistrationContainer = styled.div`
@@ -117,20 +119,29 @@ type RegistrationStep = "business" | "menu" | "location" | "review";
 const VendorRegistration: React.FC = () => {
   const [, setLocation] = useLocation();
   const [currentStep, setCurrentStep] = useState<RegistrationStep>("business");
-  const [formData, setFormData] = useState<RegistrationFormData>({
+  const [formData, setFormData] = useState<CartData>({
     businessName: "",
-    cuisineType: "Mexican",
-    ownerName: "",
-    email: "",
-    phone: "",
-    password: "",
-    description: "",
-    termsConditions: false,
+  address: "",
+  city: "",
+  state: "",
+  zipCode: "",
+  description: "",
+  menuImage:null
   });
+  // const [formData, setFormData] = useState<RegistrationFormData>({
+  //   businessName: "",
+  //   cuisineType: "Mexican",
+  //   ownerName: "",
+  //   email: "",
+  //   phone: "",
+  //   password: "",
+  //   description: "",
+  //   termsConditions: false,
+  // });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleInputChange = (
-    field: keyof RegistrationFormData,
+    field: keyof CartData,
     value: string | boolean
   ) => {
     setFormData((prev) => ({
@@ -164,29 +175,29 @@ const VendorRegistration: React.FC = () => {
       newErrors.businessName = "Business name is required";
     }
 
-    if (!formData.ownerName.trim()) {
-      newErrors.ownerName = "Owner name is required";
-    }
+    // if (!formData.ownerName.trim()) {
+    //   newErrors.ownerName = "Owner name is required";
+    // }
 
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address";
-    }
+    // if (!formData.email.trim()) {
+    //   newErrors.email = "Email is required";
+    // } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+    //   newErrors.email = "Please enter a valid email address";
+    // }
 
-    if (!formData.phone.trim()) {
-      newErrors.phone = "Phone number is required";
-    }
+    // if (!formData.phone.trim()) {
+    //   newErrors.phone = "Phone number is required";
+    // }
 
-    if (!formData.password.trim()) {
-      newErrors.password = "Password is required";
-    } else if (formData.password.length < 8) {
-      newErrors.password = "Password must be at least 8 characters";
-    }
+    // if (!formData.password.trim()) {
+    //   newErrors.password = "Password is required";
+    // } else if (formData.password.length < 8) {
+    //   newErrors.password = "Password must be at least 8 characters";
+    // }
 
-    if (!formData.termsConditions) {
-      newErrors.termsConditions = "You must agree to the terms and conditions";
-    }
+    // if (!formData.termsConditions) {
+    //   newErrors.termsConditions = "You must agree to the terms and conditions";
+    // }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -253,7 +264,23 @@ const VendorRegistration: React.FC = () => {
     { value: "Chinese", label: "Chinese" },
     { value: "Other", label: "Other" },
   ];
+const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [image, setImage] = useState<File | null>(null);
 
+  const handleButtonClick = () => {
+    fileInputRef.current?.click(); // Trigger the file input
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+
+      setFormData(prev => ({
+      ...prev,
+      menuImage: file,
+    }));
+    }
+  };
   return (
     <Container className="py-8">
       <RegistrationContainer>
@@ -393,7 +420,7 @@ const VendorRegistration: React.FC = () => {
                   required
                 />
 
-                <div className="mb-8">
+                {/* <div className="mb-8">
                   <label className="block text-neutral-700 font-medium mb-2">
                     Business Image
                   </label>
@@ -423,7 +450,7 @@ const VendorRegistration: React.FC = () => {
                       Browse Files
                     </Button>
                   </DropzoneContainer>
-                </div>
+                </div> */}
 
                 <div className="mb-8">
                   <div className="flex items-start">
@@ -514,18 +541,34 @@ const VendorRegistration: React.FC = () => {
                       placeholder="Select a category"
                     /> */}
 
-                    <div>
-                      <label className="block text-neutral-700 font-medium mb-2">
-                        Item Image
-                      </label>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        className="w-full py-2"
-                      >
-                        <i className="fas fa-upload mr-2"></i> Upload Image
-                      </Button>
-                    </div>
+                     <div>
+      <label className="block text-neutral-700 font-medium mb-2">
+        Item Image
+      </label>
+
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleFileChange}
+        ref={fileInputRef}
+        className="hidden"
+      />
+
+      <Button
+        type="button"
+        variant="outline"
+        className="w-full py-2"
+        onClick={handleButtonClick}
+      >
+        <i className="fas fa-upload mr-2"></i> Upload Menu Image
+      </Button>
+
+      {formData.menuImage && (
+        <p className="mt-2 text-sm text-green-600">
+          Selected: {formData.menuImage.name}
+        </p>
+      )}
+    </div>
                   {/* </div> */}
                 {/* </div> */}
 
@@ -552,7 +595,9 @@ const VendorRegistration: React.FC = () => {
                     label="Street Address"
                     placeholder="e.g., 123 Food Truck Lane"
                     value={formData.address}
-                    onChange={() => {}}
+                    onChange={(e) =>
+                    handleInputChange("address", e.target.value)
+                  }
                     className="mb-4"
                   />
 
@@ -561,21 +606,27 @@ const VendorRegistration: React.FC = () => {
                       label="City"
                       placeholder="e.g., New York"
                       value={formData.city}
-                      onChange={() => {}}
+                      onChange={(e) =>
+                    handleInputChange("city", e.target.value)
+                  }
                     />
 
                     <FormInput
                       label="State"
                       placeholder="e.g., NY"
                       value={formData.state}
-                      onChange={() => {}}
+                      onChange={(e) =>
+                    handleInputChange("state", e.target.value)
+                  }
                     />
 
                     <FormInput
                       label="ZIP Code"
                       placeholder="e.g., 10001"
-                      value={formData.zip}
-                      onChange={() => {}}
+                      value={formData.zipCode}
+                      onChange={(e) =>
+                    handleInputChange("zipCode", e.target.value)
+                  }
                     />
                   </div>
                 </div>
