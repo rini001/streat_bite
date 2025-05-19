@@ -13,9 +13,10 @@ import {
 import FormInput from "@/components/forms/FormInput";
 import FormSelect from "@/components/forms/FormSelect";
 import { CuisineType, RegistrationFormData } from "@/types";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { CartData } from "@/types/cart.types";
 import { previousDay } from "date-fns";
+import { cartService } from "@/api/services/cartService";
 
 // Styled components for this page
 const RegistrationContainer = styled.div`
@@ -163,7 +164,7 @@ const VendorRegistration: React.FC = () => {
     if (e.target.files && e.target.files[0]) {
       setFormData((prev) => ({
         ...prev,
-        image: e.target.files![0],
+        menuImage: e.target.files![0],
       }));
     }
   };
@@ -225,16 +226,21 @@ const VendorRegistration: React.FC = () => {
     }
   };
   const navigate = useNavigate();
-  const handleSubmit = (e: React.FormEvent) => {
+   const { id } = useParams();
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+ try {
+      const response = await cartService.addCart(formData);
+      console.log("Cart added successfully:", response);
+      navigate(`/dashboard/${id}`); // redirect on success
+    } catch (error) {
+      console.error("Failed to add cart:", error);
+      // Optional: show error to user
+    }
+    console.log("Form data:", formData);
 
-    // In a real app, you would submit the form data to your backend
-    console.log("Form submitted:", formData);
-
-    // Redirect to success page or dashboard
-    navigate("/dashboard/1");
   };
-
+  
   // Calculate step progress
   const getStepProgress = (): number => {
     switch (currentStep) {

@@ -41,12 +41,12 @@ const AddCartButton = styled.button`
 const VendorDashboard: FC = () => {
     const navigate = useNavigate(); // 👉 initialize the hook
 
+    const { id } = useParams();
     const handleAddCartClick = () => {
-      navigate('/vendor-register'); // 👉 navigate to the route
+      navigate(`/vendor-register/${id}`); // 👉 navigate to the route
     };
    const [carts, setCarts] = useState([]);
   const [error, setError] = useState<string | null>(null);
-const { id } = useParams();
   useEffect(() => {
     const fetchCarts = async () => {
       try {

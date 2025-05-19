@@ -30,7 +30,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/discover" element={<VendorDiscovery />} />
                 <Route path="/vendor/:id" element={<VendorDetail />} />
-                <Route path="/vendor-register" element={<VendorRegistration />} />
+                <Route path="/vendor-register/:id" element={<VendorRegistration />} />
                 <Route path="/profile" element={<UserProfile />} />
                 {/* Commented out the Route for VendorDashboard, but adjust if needed */}
                 <Route path="/dashboard/:id" element={<VendorDashboard />} />
