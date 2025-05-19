@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 const api: AxiosInstance = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "https://street-bite-backend-1.onrender.com/api",
   headers: {
     'Content-Type': 'application/json'
   }
