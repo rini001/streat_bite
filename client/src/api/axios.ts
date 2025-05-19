@@ -1,12 +1,12 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 const api: AxiosInstance = axios.create({
-  baseURL: 'https://street-bite-backend-1.onrender.com/api',
+  baseURL: "http://localhost:5000/api",
   headers: {
     'Content-Type': 'application/json'
   }
 });
-
+// console.log('API Base URL:', import.meta.env.VITE_API_BASE_URL);
 api.interceptors.request.use(
   (config: any): any => {
     const token = localStorage.getItem('token');
