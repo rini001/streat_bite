@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-
+// form some reason the import.meta.env.VITE_API_BASE_URL is not working so I hardcoded the baseURL, but I will try to fix it later
+// import.meta.env.VITE_API_BASE_URL
 const api: AxiosInstance = axios.create({
   baseURL: "https://street-bite-backend-1.onrender.com/api",
   headers: {
